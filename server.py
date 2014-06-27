@@ -4,9 +4,9 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-# client = MongoClient('mongodb://localhost:27017/')
-# db = client.DATABASE_NAME
-# collection = db.COLLECTION_NAME
+client = MongoClient('mongodb://localhost:27017/')  # todo: change to the Heroku environment variable that contains the path for the MongoLab database
+db = client.DATABASE_NAME
+collection = db.COLLECTION_NAME
 
 @app.route('/', methods=['GET'])
 def index():
