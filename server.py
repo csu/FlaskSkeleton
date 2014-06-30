@@ -4,14 +4,35 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-# client = MongoClient('mongodb://localhost:27017/')  # todo: change to the Heroku environment variable that contains the path for the MongoLab database
-# db = client.DATABASE_NAME
-# ollection = db.COLLECTION_NAME
+# ###################################################################
+# Check if running locally on on Heroku and setup MongoDB accordingly
+# ###################################################################
+on_heroku = False
+if 'MONGOLAB_URI' in os.environ:
+  on_heroku = True
+
+if on_heroku:
+    client = MongoClient(os.environ['MONGOLAB_URI'])
+    db = client.get_default_database()
+    collection = db.data
+else:
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client.instachart
+    collection = db.data
+
+# ###################################################################
+# Routes
+# ###################################################################
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html', header='Flask Skeleton', title='Flask Skeleton', body='''
         <p>Some content can go here!</p>
         ''')
+
+# ###################################################################
+# Start Flask
+# ###################################################################
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, port=33507)
