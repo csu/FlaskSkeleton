@@ -7,11 +7,7 @@ app = Flask(__name__)
 # ###################################################################
 # Check if running locally on on Heroku and setup MongoDB accordingly
 # ###################################################################
-on_heroku = False
-if 'MONGOLAB_URI' in os.environ:
-  on_heroku = True
-
-if on_heroku:
+if 'MONGOLAB_URI' in os.environ::
     client = MongoClient(os.environ['MONGOLAB_URI'])
     db = client.get_default_database()
     collection = db.data
